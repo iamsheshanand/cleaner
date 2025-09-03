@@ -18,6 +18,10 @@ class WindowCleaningTest2 {
 
     private static final String DATE_2026_01_10 = "2026-01-10";
     private static final String DATE_2025_10_01 = "2025-10-01";
+    public static final String LOYAL_CUSTOMER = "yes";
+    public static final String STANDARD_CUSTOMER = "no";
+    public static final int BI_WEEKLY = 2;
+    public static final int MONTHLY = 4;
 
     private List<Customer> customers;
     private List<CustomerBooking> customerBookings;
@@ -29,10 +33,10 @@ class WindowCleaningTest2 {
         CustomerBooking customerBookingNumber3 = new CustomerBooking(3, 1, LocalDate.parse(DATE_2025_10_01));
         CustomerBooking customerBookingNumber4 = new CustomerBooking(4, 3, LocalDate.parse(DATE_2025_10_01));
 
-        Customer john = new Customer(1, "John", 10, "yes", 4);
-        Customer paul = new Customer(2, "Paul", 5, null, 0);
-        Customer ringo = new Customer(3, "Ringo", 12, "yes", 2);
-        Customer george = new Customer(4, "George", 4, "yes", 4);
+        Customer john = new Customer(1, "John", 10, LOYAL_CUSTOMER, MONTHLY);
+        Customer paul = new Customer(2, "Paul", 5, STANDARD_CUSTOMER, 0);
+        Customer ringo = new Customer(3, "Ringo", 12, LOYAL_CUSTOMER, BI_WEEKLY);
+        Customer george = new Customer(4, "George", 4, LOYAL_CUSTOMER, MONTHLY);
 
         customers = List.of(john, paul, ringo, george);
         customerBookings = List.of(customerBookingNumber1, customerBookingNumber2, customerBookingNumber3, customerBookingNumber4);
@@ -131,8 +135,9 @@ class WindowCleaningTest2 {
         double discountPerWindow = 0.75;
         Integer loyalCustomerBookingNumber = 3;
 
-        Map<Integer, Integer> customerWindowsByCustomerNumbers = customers.stream()
-                .filter(customer -> customer.loyaltyScheme().equals("yes") && (customer.frequency() == 2 || customer.frequency() == 4))
+        Map<Integer, Integer> loyalCustomerWindowsByCustomerNumbers = customers.stream()
+                .filter(customer -> customer.loyaltyScheme().equals(LOYAL_CUSTOMER)
+                 && (customer.frequency() == BI_WEEKLY || customer.frequency() == MONTHLY))
                 .collect(Collectors.toMap(Customer::customerNumber, Customer::windows));
 
 
@@ -140,7 +145,7 @@ class WindowCleaningTest2 {
                 .filter(customerBooking ->
                         customerBooking.bookingNumber().equals(loyalCustomerBookingNumber))
                 .map(customerBooking ->
-                        customerWindowsByCustomerNumbers.get(customerBooking.customerNumber()))
+                        loyalCustomerWindowsByCustomerNumbers.get(customerBooking.customerNumber()))
                 .mapToInt(Integer::intValue).sum();
 
         Double totalCostForLoyalCustomer = loyaltySchemeDiscountPerProperty + numberOfWindowsPerBookingForACustomer * discountPerWindow;
@@ -158,8 +163,9 @@ class WindowCleaningTest2 {
         int loyaltySchemeDiscountPerProperty = 4;
         double discountPerWindow = 0.75;
 
-        Map<Integer, Integer> customerWindowsByCustomerNumbers = customers.stream()
-                .filter(customer -> customer.loyaltyScheme().equals("yes") && (customer.frequency() == 2 || customer.frequency() == 4))
+        Map<Integer, Integer> loyalCustomerWindowsByCustomerNumbers = customers.stream()
+                .filter(customer -> customer.loyaltyScheme().equals(LOYAL_CUSTOMER)
+                && (customer.frequency() == BI_WEEKLY || customer.frequency() == MONTHLY))
                 .collect(Collectors.toMap(Customer::customerNumber, Customer::windows));
 
 
@@ -167,7 +173,7 @@ class WindowCleaningTest2 {
                 .filter(customerBooking ->
                         customerBooking.bookingNumber().equals(loyalCustomerBookingNumber))
                 .map(customerBooking ->
-                        customerWindowsByCustomerNumbers.get(customerBooking.customerNumber()))
+                        loyalCustomerWindowsByCustomerNumbers.get(customerBooking.customerNumber()))
                 .mapToInt(Integer::intValue).sum();
 
         Double totalCostForLoyalCustomer = loyaltySchemeDiscountPerProperty + numberOfWindowsPerBookingForACustomer * discountPerWindow;
