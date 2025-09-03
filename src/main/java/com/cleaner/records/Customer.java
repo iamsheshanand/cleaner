@@ -1,5 +1,7 @@
 package com.cleaner.records;
 
+import com.cleaner.enums.Frequency;
+import com.cleaner.enums.LoyaltyScheme;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -16,7 +18,7 @@ public record Customer(
         @Positive
         @NumberFormat(style = NumberFormat.Style.NUMBER)
         Integer windows,
-        String loyaltyScheme,
-        Integer frequency
-        ) {
+        LoyaltyScheme loyaltyScheme,
+        Frequency frequency
+) {
 }

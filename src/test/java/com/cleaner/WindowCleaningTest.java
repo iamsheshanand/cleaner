@@ -1,5 +1,7 @@
 package com.cleaner;
 
+import com.cleaner.enums.Frequency;
+import com.cleaner.enums.LoyaltyScheme;
 import com.cleaner.records.Customer;
 import com.cleaner.records.CustomerBooking;
 import org.junit.jupiter.api.AfterEach;
@@ -27,10 +29,10 @@ class WindowCleaningTest {
         CustomerBooking customerBookingNumber3 = new CustomerBooking(3, 1, LocalDate.parse(DATE_2025_10_01));
         CustomerBooking customerBookingNumber4 = new CustomerBooking(4, 3, LocalDate.parse(DATE_2025_10_01));
 
-        Customer john = new Customer(1, "John", 10, "", 0);
-        Customer paul = new Customer(2, "Paul", 5, "", 0);
-        Customer ringo = new Customer(3, "Ringo", 12, "", 0);
-        Customer george = new Customer(4, "George", 4, "", 0);
+        Customer john = new Customer(1, "John", 10, LoyaltyScheme.LOYAL, Frequency.BI_WEEKLY);
+        Customer paul = new Customer(2, "Paul", 5, LoyaltyScheme.STANDARD, Frequency.NONE);
+        Customer ringo = new Customer(3, "Ringo", 12, LoyaltyScheme.LOYAL, Frequency.BI_WEEKLY);
+        Customer george = new Customer(4, "George", 4, LoyaltyScheme.LOYAL, Frequency.BI_WEEKLY);
 
         customers = List.of(john, paul, ringo, george);
         customerBookings = List.of(customerBookingNumber1, customerBookingNumber2, customerBookingNumber3, customerBookingNumber4);

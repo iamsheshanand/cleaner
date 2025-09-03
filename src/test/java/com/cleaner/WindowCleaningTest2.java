@@ -1,5 +1,7 @@
 package com.cleaner;
 
+import com.cleaner.enums.Frequency;
+import com.cleaner.enums.LoyaltyScheme;
 import com.cleaner.records.Customer;
 import com.cleaner.records.CustomerBooking;
 import org.junit.jupiter.api.AfterEach;
@@ -33,10 +35,10 @@ class WindowCleaningTest2 {
         CustomerBooking customerBookingNumber3 = new CustomerBooking(3, 1, LocalDate.parse(DATE_2025_10_01));
         CustomerBooking customerBookingNumber4 = new CustomerBooking(4, 3, LocalDate.parse(DATE_2025_10_01));
 
-        Customer john = new Customer(1, "John", 10, LOYAL_CUSTOMER, MONTHLY);
-        Customer paul = new Customer(2, "Paul", 5, STANDARD_CUSTOMER, 0);
-        Customer ringo = new Customer(3, "Ringo", 12, LOYAL_CUSTOMER, BI_WEEKLY);
-        Customer george = new Customer(4, "George", 4, LOYAL_CUSTOMER, MONTHLY);
+        Customer john = new Customer(1, "John", 10, LoyaltyScheme.LOYAL, Frequency.MONTHLY);
+        Customer paul = new Customer(2, "Paul", 5, LoyaltyScheme.STANDARD, Frequency.NONE);
+        Customer ringo = new Customer(3, "Ringo", 12, LoyaltyScheme.LOYAL, Frequency.BI_WEEKLY);
+        Customer george = new Customer(4, "George", 4, LoyaltyScheme.LOYAL, Frequency.MONTHLY);
 
         customers = List.of(john, paul, ringo, george);
         customerBookings = List.of(customerBookingNumber1, customerBookingNumber2, customerBookingNumber3, customerBookingNumber4);
@@ -136,8 +138,8 @@ class WindowCleaningTest2 {
         Integer loyalCustomerBookingNumber = 3;
 
         Map<Integer, Integer> loyalCustomerWindowsByCustomerNumbers = customers.stream()
-                .filter(customer -> customer.loyaltyScheme().equals(LOYAL_CUSTOMER)
-                 && (customer.frequency() == BI_WEEKLY || customer.frequency() == MONTHLY))
+                .filter(customer -> customer.loyaltyScheme().equals(LoyaltyScheme.LOYAL)
+                                    && (customer.frequency() == Frequency.BI_WEEKLY || customer.frequency() == Frequency.MONTHLY))
                 .collect(Collectors.toMap(Customer::customerNumber, Customer::windows));
 
 
@@ -164,8 +166,8 @@ class WindowCleaningTest2 {
         double discountPerWindow = 0.75;
 
         Map<Integer, Integer> loyalCustomerWindowsByCustomerNumbers = customers.stream()
-                .filter(customer -> customer.loyaltyScheme().equals(LOYAL_CUSTOMER)
-                && (customer.frequency() == BI_WEEKLY || customer.frequency() == MONTHLY))
+                .filter(customer -> customer.loyaltyScheme().equals(LoyaltyScheme.LOYAL)
+                                    && (customer.frequency() == Frequency.BI_WEEKLY || customer.frequency() == Frequency.MONTHLY))
                 .collect(Collectors.toMap(Customer::customerNumber, Customer::windows));
 
 

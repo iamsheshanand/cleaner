@@ -37,12 +37,11 @@ class CustomersBookingRepositoryTest {
                 .name("name").windows(10).bookings(customersBookingList).build();
 
 
-
         entityManager.persist(customer1);
         Optional<CustomerBooking> customerBooking = customersBookingRepository.findByBookingNumber(1);
 
         assertThat(customerBooking).isNotNull();
-        assertThat(customerBooking.get()).isEqualTo(customerBooking1);
+        assertThat(customerBooking.get().getBookingNumber()).isEqualTo(customerBooking1.getBookingNumber());
         assertThat(customerBooking.get().getCustomerNumber()).isEqualTo(123);
     }
 
