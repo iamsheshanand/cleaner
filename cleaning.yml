@@ -1,0 +1,81 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /cleaning/windows/{specifiedDate}/total:
+    get:
+      tags:
+        - window-cleaning-controller
+      summary: Get sum of total windows cleaned on specified date
+      description: Gets sum of total windows cleaned on specified date
+      operationId: totalWindowsCleanedForSpecifiedDate
+      parameters:
+        - name: specifiedDate
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successfully calculated total windows cleaned on specified date
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+  /cleaning/booking/{bookingNumber}/cost/total:
+    get:
+      tags:
+        - window-cleaning-controller
+      summary: Get total cleaning cost per booking
+      description: ${clean.cost.description}
+      operationId: cleaningCostTotalPerBooking
+      parameters:
+        - name: bookingNumber
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successfully calculated total cost
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+components: {}
