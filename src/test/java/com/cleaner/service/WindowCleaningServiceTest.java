@@ -19,9 +19,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class WindowCleaningServiceTest {
@@ -39,7 +37,6 @@ class WindowCleaningServiceTest {
     private CustomerBookingsRepository customerBookingsRepository;
 
     private List<Customer> customers;
-    private List<CustomerBooking> customerBookings;
     private List<CustomerBooking> customerBookingsBySpecifiedDate;
 
 
@@ -56,7 +53,6 @@ class WindowCleaningServiceTest {
         Customer george = new Customer(4, "George", 4, "", 0);
 
         customers = List.of(john, paul, ringo, george);
-        customerBookings = List.of(customerBookingNumber1, customerBookingNumber2, customerBookingNumber3, customerBookingNumber4);
         customerBookingsBySpecifiedDate = List.of(customerBookingNumber1, customerBookingNumber3, customerBookingNumber4);
 
     }
@@ -64,7 +60,6 @@ class WindowCleaningServiceTest {
     @AfterEach
     void tearDown() {
         customers = null;
-        customerBookings = null;
         customerBookingsBySpecifiedDate = null;
     }
 

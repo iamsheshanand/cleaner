@@ -1,8 +1,6 @@
 package com.cleaner.repository;
 
 import com.cleaner.records.CustomerBooking;
-import jakarta.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

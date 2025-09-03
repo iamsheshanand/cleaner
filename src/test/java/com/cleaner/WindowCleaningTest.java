@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -51,18 +49,6 @@ class WindowCleaningTest {
 
         Integer totalWindowsCleanedOnSpecifiedDate = 26;
 
-        //map of date and booking
-//        Map<LocalDate, List<CustomerBooking>> listOfBookingNumbersByDate = customerBookings.stream()
-//                .collect(Collectors.groupingBy(CustomerBooking::date));
-
-        //date filter (maybe not needed) (but to check if the date is available matching specified date)
-//        Optional<LocalDate> date = listOfBookingNumbersByDate.keySet().stream()
-//                .filter(c -> c.equals(LocalDate.parse(DATE_2025_10_01)))
-//                .findFirst();
-
-//        if (date.isPresent()) { // now if it does
-        //get all the customer bookings by that date
-//            List<CustomerBooking> customerBookingFilteredByDate = listOfBookingNumbersByDate.get(date.get());
         int sum = customerBookings.stream()
                 .filter(cb -> LocalDate.parse(DATE_2025_10_01).equals(cb.date()))
                 .map(cb -> customers.stream()
@@ -71,20 +57,6 @@ class WindowCleaningTest {
                         .mapToInt(Customer::windows)
                         .sum()
                 ).mapToInt(Integer::intValue).sum();
-
-
-//                    .collect(Collectors.groupingBy(CustomerBooking::customerNumber));
-//        Integer[] sum = {0};
-//        customerNumberWithCustomerBookingsMap.forEach((k, v) -> {
-//                int count = customers.stream()
-//                        .filter(c -> c.customerNumber().equals(k))
-//                        .map(Customer::windows)
-//                        .mapToInt(Integer::intValue)
-//                        .sum();
-//                sum[0] = sum[0] + count;
-//            });
-//        }
-
 
         assertEquals(totalWindowsCleanedOnSpecifiedDate, sum);
 

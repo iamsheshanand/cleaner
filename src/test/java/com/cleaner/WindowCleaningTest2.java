@@ -77,7 +77,7 @@ class WindowCleaningTest2 {
        for that booking
        */
         Integer bookingNumber = 3;
-        Integer costPerPropertyOrBooking = 5;
+        int costPerPropertyOrBooking = 5;
 
 
         Map<Integer, Integer> customerWindowsByCustomerNumbers = customers.stream()
@@ -112,26 +112,27 @@ class WindowCleaningTest2 {
     void shouldCalculateTotalCostForAllBookingsOnASpecifiedDate() {
         Map<Integer, Integer> customerWindowsByCustomerNumbers = customers.stream()
                 .collect(Collectors.toMap(Customer::customerNumber, Customer::windows));
-       Integer totalSumForSpecifedDate = customerBookings.stream()
+        int totalSumForSpecifedDate = customerBookings.stream()
                 .filter(customerBooking -> customerBooking.date()
                         .equals(LocalDate.parse(DATE_2026_01_10)))
                 .map(customerBooking -> customerWindowsByCustomerNumbers.get(customerBooking.bookingNumber()))
                 .mapToInt(Integer::intValue).sum();
 
-       Integer totalCostPerBookingOnSpecifiedDate = totalSumForSpecifedDate + 5;
+        Integer totalCostPerBookingOnSpecifiedDate = totalSumForSpecifedDate + 5;
 
-       assertEquals(10, totalCostPerBookingOnSpecifiedDate);
+        assertEquals(10, totalCostPerBookingOnSpecifiedDate);
 
     }
 
     @Test
     @DisplayName("should test pricing policy to include the loyalty scheme discount")
     void shouldTestPricingPolicyToIncludeTheLoyaltySchemeDiscount() {
-        Integer loyaltySchemeDiscountPerProperty = 4;
-        Double discountPerWindow = 0.75;
+        int loyaltySchemeDiscountPerProperty = 4;
+        double discountPerWindow = 0.75;
         Integer loyalCustomerBookingNumber = 3;
 
         Map<Integer, Integer> customerWindowsByCustomerNumbers = customers.stream()
+                .filter(customer -> customer.loyaltyScheme().equals("yes") && (customer.frequency() == 2 || customer.frequency() == 4))
                 .collect(Collectors.toMap(Customer::customerNumber, Customer::windows));
 
 
@@ -142,7 +143,7 @@ class WindowCleaningTest2 {
                         customerWindowsByCustomerNumbers.get(customerBooking.customerNumber()))
                 .mapToInt(Integer::intValue).sum();
 
-        Double totalCostForLoyalCustomer = loyaltySchemeDiscountPerProperty + numberOfWindowsPerBookingForACustomer*discountPerWindow;
+        Double totalCostForLoyalCustomer = loyaltySchemeDiscountPerProperty + numberOfWindowsPerBookingForACustomer * discountPerWindow;
 
         Double expectedTotalCostForLoyalCustomer = 11.5;
 
@@ -154,10 +155,11 @@ class WindowCleaningTest2 {
     @DisplayName("should test customer saving by joining the loyalty scheme")
     void shouldTestCustomerSavingByJoinTheLoyaltyScheme() {
         Integer loyalCustomerBookingNumber = 3;
-        Integer loyaltySchemeDiscountPerProperty = 4;
-        Double discountPerWindow = 0.75;
+        int loyaltySchemeDiscountPerProperty = 4;
+        double discountPerWindow = 0.75;
 
         Map<Integer, Integer> customerWindowsByCustomerNumbers = customers.stream()
+                .filter(customer -> customer.loyaltyScheme().equals("yes") && (customer.frequency() == 2 || customer.frequency() == 4))
                 .collect(Collectors.toMap(Customer::customerNumber, Customer::windows));
 
 
@@ -168,9 +170,9 @@ class WindowCleaningTest2 {
                         customerWindowsByCustomerNumbers.get(customerBooking.customerNumber()))
                 .mapToInt(Integer::intValue).sum();
 
-        Double totalCostForLoyalCustomer = loyaltySchemeDiscountPerProperty + numberOfWindowsPerBookingForACustomer*discountPerWindow;
+        Double totalCostForLoyalCustomer = loyaltySchemeDiscountPerProperty + numberOfWindowsPerBookingForACustomer * discountPerWindow;
 
-        Integer actualTotalCostWithoutLoyalty = 5+numberOfWindowsPerBookingForACustomer;
+        Integer actualTotalCostWithoutLoyalty = 5 + numberOfWindowsPerBookingForACustomer;
 
         Double actualSaving = actualTotalCostWithoutLoyalty - totalCostForLoyalCustomer;
         Double expectedSaving = 3.5;
