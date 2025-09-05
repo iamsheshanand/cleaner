@@ -38,19 +38,8 @@ public class WindowCleaningService implements CleaningService {
           */
         int costPerPropertyOrBooking = 5;
         List<Customer> customers = customerRepository.findAllCustomers();
-        List<CustomerBooking> customerBookings = customerBookingsRepository.findAllCustomerBookings();
 
         Map<Integer, Integer> customerWindowsByCustomerNumbers = getWindowsByCustomerNumbers(customers);
-//
-//        int numberOfWindowsPerBookingForACustomer = customerBookings.stream()
-//                .filter(customerBooking ->
-//                        customerBooking.bookingNumber().equals(bookingNumber))
-//                .map(customerBooking ->
-//                        customerWindowsByCustomerNumbers.get(customerBooking.customerNumber()))
-//                .mapToInt(Integer::intValue).sum();
-
-//        return costPerPropertyOrBooking + numberOfWindowsPerBookingForACustomer;
-
         Optional<CustomerBooking> customerBookingByBookingId = customerBookingsRepository
                 .findCustomerBookingByBookingId(bookingNumber);
 

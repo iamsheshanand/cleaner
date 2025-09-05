@@ -1,6 +1,12 @@
 package com.cleaner.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -24,6 +30,11 @@ public class Customer {
     private String name;
     @Column(name = "windows")
     private Integer windows;
+    @Column(name = "loyalty_scheme")
+    private String loyaltyScheme;
+    @Column(name = "frequency")
+    private String frequency;
+
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Builder.Default
@@ -46,7 +57,10 @@ public class Customer {
         return new EqualsBuilder()
                 .append(customerNumber, customer.customerNumber)
                 .append(name, customer.name)
-                .append(windows, customer.windows).isEquals();
+                .append(windows, customer.windows)
+                .append(loyaltyScheme, customer.loyaltyScheme)
+                .append(frequency, customer.frequency)
+                .isEquals();
     }
 
     @Override
@@ -55,6 +69,8 @@ public class Customer {
                 .append(customerNumber)
                 .append(name)
                 .append(windows)
+                .append(loyaltyScheme)
+                .append(frequency)
                 .toHashCode();
     }
 
@@ -65,6 +81,8 @@ public class Customer {
                 .append("name", name)
                 .append("windows", windows)
                 .append("bookings", bookings)
+                .append("loyaltyScheme", loyaltyScheme)
+                .append("frequency", frequency)
                 .toString();
     }
 }
